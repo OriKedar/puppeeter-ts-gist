@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "test:api": "jest -- -t 'simpleFile.test.ts'",
-    "test:critical": "jest -- -t 'criticalTests.test'",
+    "test:simple": "jest -- -t 'simpleFile.test'",
+    "test:multipul": "jest -- -t 'multipuleFiles.test'",
     "test:validation": "jest -- -t 'validationTest.test'"
   },
   "keywords": [],

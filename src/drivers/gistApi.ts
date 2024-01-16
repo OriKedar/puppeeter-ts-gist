@@ -23,11 +23,18 @@ export class GistApi {
         return response
     }
 
-    createNewGist = async (files: any, token: string, gistTime?: any) => {
+    getPublicGists = async (timeStemp?:any) => {
+        const response = await baseApi.get(
+            `${this.baseUrl}/gists/public?=${timeStemp}`
+        )
+        return response 
+    }
+
+    createNewGist = async (files: any, token: string, gistTime?: any, isPublic?: boolean) => {
         const response = await baseApi.post(
             `${this.baseUrl}/gists`,
             `Bearer ${token}`,
-            await this.buildNewGistBody(files, gistTime), 
+            await this.buildNewGistBody(files, gistTime, isPublic), 
         )
         return response
     }
@@ -44,12 +51,20 @@ export class GistApi {
         return response
     }
 
-    buildNewGistBody = async (files?: any, gistTime?: any) => {
+    buildNewGistBody = async (files?: any, gistTime?: any, isPublic?: boolean | false) => {
         let body = `{"description": "Exmple of test gist ${gistTime}",
-                    "public": false,
+                    "public": ${isPublic},
                     "files": {
                         ${files}
                     }}`
         return body
+    }
+
+    getGistsIds = async (gists: any) => {
+        let ids = []
+        for (var key in gists){
+          ids.push(gists[`${key}`].id)
+        }
+        return ids
     }
 }

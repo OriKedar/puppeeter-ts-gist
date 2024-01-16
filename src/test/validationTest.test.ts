@@ -36,4 +36,24 @@ describe("Validation and Limits tests", () => {
         expect(rawResponse.status).toBe(200);
         expect(testedGist.truncated).toBeFalsy()
     });
+
+    it('Should get only public gist', async () => {
+        let rawResponse = await gistApi.createNewGist(testData.gistFiles.ssf, testData.auth.oridis123, gistTime, true);
+        expect(rawResponse.status).toBe(201);
+        let testedGist = await rawResponse.json()
+        
+        let publicGist = await (await gistApi.getPublicGists(gistTime)).json();
+        expect(await gistApi.getGistsIds(publicGist)).toContain(testedGist.id);
+
+        await gistApi.deleteGist(testedGist.id, testData.auth.oridis123)
+      })
+  
+      it('Should get only public gist - negative', async () => {
+        let rawResponse = await gistApi.createNewGist(testData.gistFiles.ssf, testData.auth.oridis123, gistTime, false);
+        expect(rawResponse.status).toBe(201);
+        let testedGist = await rawResponse.json()
+        
+        let publicGist = await (await gistApi.getPublicGists(gistTime)).json();
+        expect(await gistApi.getGistsIds(publicGist)).not.toContain(testedGist.id);
+      })
 })

@@ -2,7 +2,7 @@
 
 ## Get started
  
-Clone: `git clone git@github.com:OriKedar/puppeeterTS-gist.git`
+Clone: `git clone git@github.com:OriKedar/puppeeter-ts-gist.git`
 
 Install: `npm install` in the project root directory
 
